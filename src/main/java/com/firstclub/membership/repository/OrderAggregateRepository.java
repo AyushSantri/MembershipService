@@ -20,11 +20,6 @@ public interface OrderAggregateRepository extends JpaRepository<OrderAggregate, 
 
     OrderAggregate findByUserIdAndOrderMonthYear(Long userId, String orderMonthAndYear);
 
-    /**
-     * Atomic increment — collapses the prior read-modify-write into a single SQL UPDATE
-     * so concurrent orders for the same (user, month) cannot lose increments.
-     * Returns the number of rows updated; 0 means no aggregate row exists yet.
-     */
     @Modifying
     @Query("UPDATE OrderAggregate o " +
             "SET o.orderCount = o.orderCount + 1, " +
